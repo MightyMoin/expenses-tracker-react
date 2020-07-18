@@ -24,11 +24,20 @@ export class Provider extends Component {
     },
   };
   reducer = (action) => {
-    var { transactions , totalBalance } = this.state;
-    transactions.push(action);
-    totalBalance+=action.amount;
-    this.setState({totalBalance})
-    this.setState({ transactions });
+    var { transactions, totalBalance } = this.state;
+    const { type, payload } = action;
+    if (type === 'NEW') {
+      transactions.push(payload);
+      totalBalance += payload.amount;
+      this.setState({ totalBalance });
+      this.setState({ transactions });
+    } else if (type === 'DELETE') {
+      const delId = payload.id;
+      totalBalance -= payload.amount;
+      const newTransactions = transactions.filter((trans) => trans.id !== delId);
+      this.setState({ totalBalance });
+      this.setState({ transactions:newTransactions });
+    }
   };
   render() {
     return (

@@ -23,7 +23,11 @@ export default class Newtransaction extends Component {
       name,
       amount: num,
     };
-    dispatch(newTransaction);
+    const action = {
+      type: 'NEW',
+      payload: newTransaction,
+    };
+    dispatch(action);
     var form = document.getElementById('form-trans');
     var plus = document.querySelector('.fa-plus');
 
